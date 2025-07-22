@@ -31,6 +31,9 @@
           register: runtime
           changed_when: false
 
+        - debug:
+            var: runtime.stdout
+
         - name: Print current configuration file
           ansible.builtin.slurp:
             src: /etc/ssh/sshd_config
