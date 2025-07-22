@@ -44,6 +44,15 @@
             src: /etc/ssh/sshd_config
           register: config
 
+        - name: List effective configuration using sshd -T
+          ansible.builtin.shell: ls -la /etc/ssh/sshd_config.d/
+          register: sshd_dir_debug
+          changed_when: false
+
+        - name: debug
+          ansible.builtin.debug:
+            msg: "{{ sshd_dir_debug.stdout }}"
+
         - name: debug
           ansible.builtin.debug:
             msg: "{{ runtime.stdout }}"
@@ -108,14 +117,6 @@
           ansible.builtin.slurp:
             src: /etc/ssh/sshd_config
           register: config
-
-        - name: debug
-          ansible.builtin.debug:
-            msg: "{{ runtime.stdout }}"
-
-        - name: debug
-          ansible.builtin.debug:
-            msg: "{{ config.content | b64decode }}"
 
     - name: Check the options are effective
       # note, the options are in lower-case here
