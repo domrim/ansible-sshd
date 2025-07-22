@@ -36,6 +36,14 @@
             src: /etc/ssh/sshd_config
           register: config
 
+        - name: debug
+          ansible.builtin.debug:
+            msg: "{{ runtime.stdout }}"
+
+        - name: debug
+          ansible.builtin.debug:
+            msg: "{{ config.content | b64decode }}"
+
         - name: Check the options are effective
           # note, the options are in lower-case here
           ansible.builtin.assert:

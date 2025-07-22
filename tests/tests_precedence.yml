@@ -43,6 +43,14 @@
             src: "{{ main_sshd_config }}"
           register: config
 
+        - name: debug
+          ansible.builtin.debug:
+            msg: "{{ runtime.stdout }}"
+
+        - name: debug
+          ansible.builtin.debug:
+            msg: "{{ config.content | b64decode }}"
+
         - name: Check the sshd_* values are effective in runtime
           # note, the options are in lower-case here
           ansible.builtin.assert:
